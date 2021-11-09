@@ -9,6 +9,15 @@
 <body>
     <?php
         session_start();
+        $id=$_COOKIE["PHPSESSID"];
+        echo $id;
+        echo "<br>";
+        //echo session_id();
+        $_SESSION["nombre"]="Ruben";
+        $_SESSION["edad"]=25;
+        
+
+
     ?>
 </body>
 </html>
