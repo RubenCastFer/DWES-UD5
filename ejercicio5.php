@@ -12,19 +12,19 @@
     include "ejercicio5.inc.php";
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $usuario = $_POST["usuario"];
-        $contraseña = $_POST["contraseña"];
+        $contrasenya = $_POST["contrasenya"];
         $cuenta = $_POST["cuentaBancaria"];
-        echo insertaElemento($usuario,$contraseña,$cuenta); 
+        echo insertaElemento($usuario,$contrasenya,$cuenta); 
         
     }
 
 ?>
 <body>
-    <form class="form-register" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data" method="POST">
+    <form class="form-register" action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>"  method="POST">
         <h2 class="form-titulo">Características:</h2>
         <div class="contenedor-inputs">
             <input type="text" name="usuario" placeholder="Usuario" class="input-100" required>
-            <input type="password" name="contraseña" placeholder="Contraseña" class="input-100" required>
+            <input type="password" name="contrasenya" placeholder="Contraseña" class="input-100" required>
             <input type="text" name="cuentaBancaria" placeholder="CuentaBancaria" class="input-100" required>
             <input type="submit" value="Registrar" class="btn-enviar" >
             <div id="errores"></div>

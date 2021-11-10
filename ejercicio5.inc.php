@@ -1,16 +1,17 @@
 <?php
 $servidor="localhost";
-$baseDatos="1"; 
+$baseDatos="agenciaviajes"; 
 $user= "developer";
 $pass="developer";
 
-function insertaElemento($usuario,$contraseña,$cuentaBancaria){
-    $contraseñaEncriptada=password_hash($contraseña,PASSWORD_DEFAULT);
+function insertaElemento($usuario,$contrasenya,$cuentaBancaria){
 
     try {
         $conexion = new PDO("mysql:host=$GLOBALS[servidor];dbname=$GLOBALS[baseDatos]", $GLOBALS['user'], $GLOBALS['pass']);
-        $consulta =$conexion->prepare("INSERT INTO usuarios (usuario, contrasenya, cuentabancaria) VALUES (:usuario, :contrasenya, :cuentabancaria)");         
-        $parametros = array(":usuario"=>$usuario, ":contrasenya"=>$contraseñaEncriptada, ":cuentabancaria"=>$cuentaBancaria);
+        $consulta =$conexion->prepare("INSERT INTO usuarios (usuario, contrasenya, cuentabancaria) VALUES (:usuario, :contrasenyaEncriptada, :cuentabancaria)");         
+        $contrasenyaEncriptada=password_hash($contrasenya,PASSWORD_DEFAULT);
+
+        $parametros = array(":usuario"=>$usuario, ":contrasenyaEncriptada"=>$contrasenyaEncriptada, ":cuentabancaria"=>$cuentaBancaria);
         $consulta->execute($parametros);
         $resultado=$conexion->lastInsertId();
         $conexion = null;
