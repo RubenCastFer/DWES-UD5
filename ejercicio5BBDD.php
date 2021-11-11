@@ -1,6 +1,7 @@
 <?php
 $servidor="localhost";
-$baseDatos="agenciaviajes"; 
+//$baseDatos="agenciaviajes"; 
+$baseDatos="1"; 
 $user= "developer";
 $pass="developer";
 

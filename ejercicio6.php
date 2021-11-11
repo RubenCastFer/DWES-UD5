@@ -9,7 +9,7 @@
 </head>
 
 <?php
-    include "ejercicio5BBDD.php";
+    include "ejercicio6BBDD.php";
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $usuario = $_POST["usuario"];
         $usuario = strip_tags($usuario);
@@ -20,13 +20,18 @@
         $contrasenya = strip_tags($contrasenya);
         $contrasenya = stripslashes($contrasenya);
         $contrasenya = htmlspecialchars($contrasenya);
-
-        $cuenta = $_POST["cuentaBancaria"];
-        $cuenta = strip_tags($cuenta);
-        $cuenta = stripslashes($cuenta);
-        $cuenta = htmlspecialchars($cuenta);
-
-        echo insertaElemento($usuario,$contrasenya,$cuenta); 
+        
+        $usuarioCompleto=getUser($usuario);
+        if ($usuarioCompleto==false) {
+            echo "usuario incorrecto";
+        } else{
+            if(password_verify($contrasenya,$usuarioCompleto["contrasenya"])){
+                echo "Usuario y contraseña correctas";
+            }else{
+                echo "Usuario y contraseña incorrectas";
+            }    
+        }
+        
         
     }
 
@@ -37,7 +42,6 @@
         <div class="contenedor-inputs">
             <input type="text" name="usuario" placeholder="Usuario" class="input-100" required>
             <input type="password" name="contrasenya" placeholder="Contraseña" class="input-100" required>
-            <input type="text" name="cuentaBancaria" placeholder="CuentaBancaria" class="input-100" required>
             <input type="submit" value="Registrar" class="btn-enviar" >
             <div id="errores"></div>
         </div>
