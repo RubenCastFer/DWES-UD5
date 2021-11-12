@@ -9,7 +9,7 @@
 </head>
 
 <?php
-    include "ejercicio6BBDD.php";
+    include "ejercicio7BBDD.php";
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $usuario = $_POST["usuario"];
         $usuario = strip_tags($usuario);
