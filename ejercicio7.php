@@ -10,42 +10,53 @@
 
 <?php
     include "ejercicio7BBDD.php";
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $usuario = $_POST["usuario"];
-        $usuario = strip_tags($usuario);
-        $usuario = stripslashes($usuario);
-        $usuario = htmlspecialchars($usuario);
+    session_start();
+    if (empty($_SESSION["perfil"])){
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $usuario = $_POST["usuario"];
+            $usuario = strip_tags($usuario);
+            $usuario = stripslashes($usuario);
+            $usuario = htmlspecialchars($usuario);
+    
+            $contrasenya = $_POST["contrasenya"];
+            $contrasenya = strip_tags($contrasenya);
+            $contrasenya = stripslashes($contrasenya);
+            $contrasenya = htmlspecialchars($contrasenya);
+            
+            $usuarioCompleto=getUser($usuario);
+            if ($usuarioCompleto==false) {
+                echo "usuario incorrecto";
 
-        $contrasenya = $_POST["contrasenya"];
-        $contrasenya = strip_tags($contrasenya);
-        $contrasenya = stripslashes($contrasenya);
-        $contrasenya = htmlspecialchars($contrasenya);
-        
-        $usuarioCompleto=getUser($usuario);
-        if ($usuarioCompleto==false) {
-            echo "usuario incorrecto";
-        } else{
-            if(password_verify($contrasenya,$usuarioCompleto["contrasenya"])){
-                echo "Usuario y contraseña correctas";
-                session_destroy();
-                session_start();
-                $_SESSION["perfil"]=$usuarioCompleto["perfil"];
-                setcookie("session", $_SESSION, time()+3600*3,"","");
-                
-                if ($usuarioCompleto["perfil"]=="admin"){
-                    echo "eres el jefe supremo";
-                    header("Location: admin.php");
-                }else if($usuarioCompleto["perfil"]=="usuario"){
-                    echo "hola pringao";
-                    header("Location: usuario.php");    
-                }
-            }else{
-                echo "Usuario y contraseña incorrectas";
+            } else{
+                if(password_verify($contrasenya,$usuarioCompleto["contrasenya"])){
+                    echo "Usuario y contraseña correctas";
+                    $_SESSION["perfil"]=$usuarioCompleto["perfil"];
+                    //setcookie("session", $_SESSION, time()+3600*3,"","");
+                    
+                    if ($usuarioCompleto["perfil"]=="admin"){
+                        echo "eres el jefe supremo";
+                        header("Location: admin.php");
+
+                    }else if($usuarioCompleto["perfil"]=="usuario"){
+                        echo "hola pringao";
+                        header("Location: usuario.php");
+                                
+                    }else{
+                        header("Location: ejercicio7.php");    
+                    }
+
+                }else{
+                    echo "Usuario y contraseña incorrectas";
+                }    
             }    
         }
-        
-        
+    }else if ($_SESSION["perfil"]=="admin") {
+        header("Location: admin.php");    
+    }else if ($_SESSION["perfil"]=="usuario") {
+        header("Location: usuario.php");  
     }
+
+    
 
 ?>
 <body>

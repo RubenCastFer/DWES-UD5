@@ -27,18 +27,6 @@
         } else{
             if(password_verify($contrasenya,$usuarioCompleto["contrasenya"])){
                 echo "Usuario y contraseña correctas";
-                session_destroy();
-                session_start();
-                $_SESSION["perfil"]=$usuarioCompleto["perfil"];
-                setcookie("session", $_SESSION, time()+3600*3,"","");
-                
-                if ($usuarioCompleto["perfil"]=="admin"){
-                    echo "eres el jefe supremo";
-                    header("Location: admin.php");
-                }else if($usuarioCompleto["perfil"]=="usuario"){
-                    echo "hola pringao";
-                    header("Location: usuario.php");    
-                }
             }else{
                 echo "Usuario y contraseña incorrectas";
             }    
